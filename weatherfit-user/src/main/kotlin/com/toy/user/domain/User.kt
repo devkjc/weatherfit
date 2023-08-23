@@ -1,4 +1,4 @@
-package com.toy.domain
+package com.toy.user.domain
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -11,7 +11,4 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 ) {
-    init {
-        println("hello")
-    }
 }

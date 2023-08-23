@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class ApiApplication
 
 fun main(args: Array<String>) {
-//    println(User(1L).id)
     runApplication<ApiApplication>(*args)
 }

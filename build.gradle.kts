@@ -1,9 +1,9 @@
 plugins {
-    id("java")
     kotlin("jvm") version "1.9.0"
+    id("java")
     id("io.spring.dependency-management") version "1.1.3"
     id("org.springframework.boot") version "3.1.2"
-    id("org.jetbrains.kotlin.plugin.spring") version "1.9.0" apply false
+    id("org.jetbrains.kotlin.plugin.spring") version "1.9.0"
 }
 
 allprojects {
@@ -21,8 +21,6 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
     }
     dependencies {
-        compileOnly("org.projectlombok:lombok")
-        annotationProcessor("org.projectlombok:lombok")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation(kotlin("test"))
     }
