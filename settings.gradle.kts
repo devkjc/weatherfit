@@ -12,3 +12,4 @@ plugins {
 rootProject.name = "weatherfit"
 include("weatherfit-user")
 include("weatherfit-api")
+include("weatherfit-core")
