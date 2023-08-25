@@ -41,6 +41,7 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation(kotlin("test"))
         testImplementation (project(":weatherfit-api"))
+        testImplementation(project(":weatherfit-core"))
     }
     tasks.test {
         useJUnitPlatform()

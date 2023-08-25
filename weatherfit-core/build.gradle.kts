@@ -7,6 +7,5 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-test")
 }

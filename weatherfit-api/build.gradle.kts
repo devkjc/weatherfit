@@ -1,6 +1,6 @@
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation(project(":weatherfit-style"))
     implementation(project(":weatherfit-user"))
-    implementation(project(":weatherfit-core"))
+//    implementation(project(":weatherfit-core"))
 }
