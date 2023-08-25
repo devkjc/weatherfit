@@ -17,6 +17,7 @@ allprojects {
 subprojects {
     apply {
         plugin("kotlin")
+        plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.jpa")
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.jetbrains.kotlin.kapt")
@@ -26,8 +27,12 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
     }
     dependencies {
+        implementation ("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+        implementation("org.springframework.boot:spring-boot-starter")
+        implementation("org.springframework.boot:spring-boot-starter-validation")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation(kotlin("test"))
+        testImplementation (project(":weatherfit-api"))
     }
     tasks.test {
         useJUnitPlatform()

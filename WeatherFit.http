@@ -1,1 +1,9 @@
-GET localhost:8080/test
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "nickName": "멋쟁이",
+  "ageRange": "AGE30_39",
+  "gender": "MALE",
+  "height": 174
+}
