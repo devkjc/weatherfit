@@ -35,12 +35,17 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
     }
     dependencies {
+        if (name.endsWith("service")) {
+            runtimeOnly("com.h2database:h2")
+            implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+            implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+        }
+        implementation("org.springframework.boot:spring-boot-starter-validation")
         implementation ("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
         implementation("org.springframework.boot:spring-boot-starter")
-        implementation("org.springframework.boot:spring-boot-starter-validation")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation(kotlin("test"))
-        testImplementation (project(":weatherfit-api"))
+        testImplementation(project(":weatherfit-api"))
         testImplementation(project(":weatherfit-core"))
     }
     tasks.test {

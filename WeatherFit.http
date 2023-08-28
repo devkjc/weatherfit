@@ -7,3 +7,16 @@ Content-Type: application/json
   "gender": "MALE",
   "height": 174
 }
+
+###
+
+GET http://localhost:8080/style
+
+###
+POST http://localhost:8080/user/style
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "styleIdList": [1,2,5,7]
+}

@@ -2,12 +2,14 @@ package com.toy.style.domain
 
 import jakarta.persistence.*
 
+@Entity
 class UserStyle (
 
     val userId: Long,
 
-    @OneToMany(mappedBy = "id", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val styleList: List<Style> = mutableListOf(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "style_id")
+    val style: Style,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
