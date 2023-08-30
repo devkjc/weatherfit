@@ -20,3 +20,21 @@ Content-Type: application/json
   "userId": 1,
   "styleIdList": [1,2,5,7]
 }
+
+
+###
+GET https://apis.data.go.kr/1360000/AsosDalyInfoService
+    ?serviceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &dataType=json
+    &dataCd=ASOS
+    &dateCd=HR
+    &stnIds=108
+    &endDt=20230829&endHh=23&startHh=00&startDt=20230829
+
+###
+GET https://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList
+    ?serviceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &pageNo=1&numOfRows=10
+    &dataType=JSON&dataCd=ASOS
+    &dateCd=DAY&startDt=20230829&endDt=20230829
+    &stnIds=108

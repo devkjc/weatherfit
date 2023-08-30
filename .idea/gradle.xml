@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/weatherfit-core" />
             <option value="$PROJECT_DIR$/weatherfit-style-service" />
             <option value="$PROJECT_DIR$/weatherfit-user-service" />
+            <option value="$PROJECT_DIR$/weatherfit-weather" />
           </set>
         </option>
       </GradleProjectSettings>
