@@ -1,0 +1,9 @@
+INSERT INTO weatherfit.style (id, name) VALUES (1, '미니멀');
+INSERT INTO weatherfit.style (id, name) VALUES (2, '이지캐주얼');
+INSERT INTO weatherfit.style (id, name) VALUES (3, '비즈니스캐주얼');
+INSERT INTO weatherfit.style (id, name) VALUES (4, '아메카지');
+INSERT INTO weatherfit.style (id, name) VALUES (5, '스트릿');
+INSERT INTO weatherfit.style (id, name) VALUES (6, '시티보이');
+INSERT INTO weatherfit.style (id, name) VALUES (7, '원마일웨어');
+INSERT INTO weatherfit.style (id, name) VALUES (8, '스포티');
+INSERT INTO weatherfit.style (id, name) VALUES (9, '유니크');

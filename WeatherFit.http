@@ -38,3 +38,45 @@ GET https://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList
     &dataType=JSON&dataCd=ASOS
     &dateCd=DAY&startDt=20230829&endDt=20230829
     &stnIds=108
+
+### 국지예보모델 단일면한반도조회
+### 기상청에서 운영하는 수치예보모델중 국지예보모델의 단일면 한반도 데이터를 조회하는 기능
+GET https://apis.data.go.kr/1360000/NwpModelInfoService/getLdapsUnisAll
+    ?ServiceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &pageNo=1&numOfRows=10&dataType=JSON
+    &baseTime=202309120300
+    &leadHour=1&dataTypeCd=Temp
+
+### 국지예보모델 단일면행정구역조회
+### 기상청에서 운영하는 수치예보모델중 국지예보모델의 단일면 행정구역 데이터를 조회하는 기능
+GET https://apis.data.go.kr/1360000/NwpModelInfoService/getLdapsUnisArea
+    ?ServiceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &pageNo=1&numOfRows=10&dataType=JSON
+    &baseTime=202309130300&dongCode=4136057000&dataTypeCd=Temp
+
+### 지역예보모델 단일면한반도조회
+### 기상청에서 운영하는 수치예보모델중 지역예보모델의 단일면 한반도 데이터를 조회하는 기능
+GET https://apis.data.go.kr/1360000/NwpModelInfoService/getRdapsUnisAll
+    ?ServiceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &pageNo=1&numOfRows=10&dataType=JSON
+    &baseTime=202309180300&leadHour=6&dataTypeCd=Temp
+    &dongCode=4136057000
+
+### 지역예보모델 단일면행정구역조회
+### 기상청에서 운영하는 수치예보모델중 지역예보모델의 단일면 행정구역 데이터를 조회하는 기능
+GET https://apis.data.go.kr/1360000/NwpModelInfoService/getRdapsUnisArea
+    ?ServiceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &pageNo=1&numOfRows=10&dataType=JSON
+    &baseTime=202309180300&dongCode=4136057000&dataTypeCd=Temp
+
+### 초단기실황조회
+GET https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
+    ?serviceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
+    &dataType=JSON
+    &numOfRows=10&pageNo=1
+    &base_date=20230912&base_time=1000
+    &nx=62&ny=128
+
+### 현시간 날씨 조회
+### 37.6488758 127.1167427
+GET localhost:8080/weather?lat=37.6488758&lon=127.1167427

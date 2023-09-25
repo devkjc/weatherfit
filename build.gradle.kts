@@ -10,6 +10,7 @@ plugins {
     kotlin("jvm") version "1.9.0"
     kotlin("plugin.spring") version "1.9.0"
     kotlin("plugin.jpa") version "1.9.0"
+    kotlin("plugin.allopen") version "1.9.0"
     kotlin("kapt") version "1.9.0"
     id("java")
     id("io.spring.dependency-management") version "1.1.3"
@@ -28,15 +29,20 @@ subprojects {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.jpa")
         plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.allopen")
         plugin("org.jetbrains.kotlin.kapt")
         plugin("java")
         plugin("io.spring.dependency-management")
         plugin("org.springframework.boot")
         plugin("org.jetbrains.kotlin.plugin.spring")
     }
+    allOpen {
+      annotation("jakarta.persistence.Entity")
+    }
     dependencies {
         if (name.endsWith("service")) {
-            runtimeOnly("com.h2database:h2")
+            runtimeOnly("com.mysql:mysql-connector-j")
+            implementation("org.hibernate:hibernate-spatial:6.3.0.Final")
             implementation("org.springframework.boot:spring-boot-starter-data-jpa")
             implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
         }
