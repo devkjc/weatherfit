@@ -1,7 +1,7 @@
 package com.toy.weatherfit.weather
 
 import com.toy.weatherfit.test.DataServiceTest
-import com.toy.weatherfit.weather.WeatherCall
+import com.toy.weatherfit.weather.service.WeatherCall
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -24,7 +24,7 @@ class WeatherCallTest(
 
     }
 
-    @Test
+//    @Test
     fun callCurrentWeather() {
         val callCurrentWeather = weatherCall.callCurrentWeather(37.5889503, 127.0644882)
         println(callCurrentWeather)

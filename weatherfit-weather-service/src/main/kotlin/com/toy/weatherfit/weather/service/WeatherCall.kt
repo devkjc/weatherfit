@@ -1,4 +1,4 @@
-package com.toy.weatherfit.weather
+package com.toy.weatherfit.weather.service
 
 import com.toy.weatherfit.weather.domain.MapCodeRepository
 import com.toy.weatherfit.weather.dto.CurrentWeather
@@ -30,9 +30,15 @@ class WeatherCall(
 
     private val apiService = retrofit.create(WeatherCallService::class.java)
 
+    /**
+     * 현재 시간의 날씨를 호출하는 함수
+     * @param lat Double
+     * @param lon Double
+     * @return CurrentWeather?
+     */
     fun callCurrentWeather(lat: Double = 37.6472744, lon: Double = 127.116003): CurrentWeather? {
         val baseDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
-        val mapCode = mapCodeRepository.getMapXY(lat, lon)
+        val mapCode = mapCodeRepository.getMapCodeByLatLon(lat, lon)
         val call = apiService.getCurrentWeather(baseDate, getCurrentTime(), mapCode.x.toString(), mapCode.y.toString(), serviceKey)
 
         val response = call.execute()
@@ -45,15 +51,21 @@ class WeatherCall(
         }
     }
 
-    fun callDailyWeather(startDt: String, endDt: String) {
-        val call = apiService.getDailyWeather(startDt, endDt, serviceKey)
+    /**
+     * 과거 날씨를 호출하는 함수
+     * @param startDt String
+     * @param endDt String
+     * @param stnId Int
+     * @return WeatherResponse.Response.Body.Items.Item?
+     */
+    fun callDailyWeather(startDt: String, endDt: String, stnId: Long): WeatherResponse.Response.Body.Items.Item? {
+        val call = apiService.getDailyWeather(startDt, endDt, serviceKey, stnIds = stnId.toString())
 
         val response = call.execute()
-        if (response.isSuccessful && response.body() != null && response.body()?.resultCode.equals("00")) {
-            println(response)
-            println(response.body())
+        return if (response.isSuccessful && response.body() != null && response.body()?.resultCode.equals("00")) {
+            response.body()!!.getWeather()
         } else {
-            println(response)
+            null
         }
     }
 

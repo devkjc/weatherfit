@@ -41,7 +41,7 @@ data class WeatherResponse(
         }
     }
 
-    private fun getWeather() = response.body.items.item.getOrNull(0)
+    fun getWeather() = response.body.items.item.getOrNull(0)
 
     /**
      * 결과 코드

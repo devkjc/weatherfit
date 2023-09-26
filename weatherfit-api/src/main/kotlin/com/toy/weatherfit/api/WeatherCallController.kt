@@ -1,6 +1,6 @@
 package com.toy.weatherfit.api
 
-import com.toy.weatherfit.weather.WeatherCall
+import com.toy.weatherfit.weather.service.WeatherCall
 import com.toy.weatherfit.weather.dto.CurrentWeather
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

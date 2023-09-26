@@ -10,34 +10,39 @@ data class CurrentWeather(
     val city: String,
     val gu: String,
     val dong: String,
-    val values: List<WeatherValue>
+    val temperature: Double,          // 기온
+    val humidity: Double,             // 평균 상대 습도
+    val rainType: String,             // 강수형태
+    val rainAmount: Double,           // 강수량
+    val windSpeed: Double,            // 풍속
+    val windType: String              // 풍속
 ) {
-    data class WeatherValue(
-        val name: String,
-        val value: Any,
-        val unit: String
-    )
 
     companion object {
         fun of(currentWeatherResponse: CurrentWeatherResponse, mapCode: MapCode): CurrentWeather {
-            val item = currentWeatherResponse.response.body.items.item
-            val first = item[0]
-            val values = item.map { it.toWeatherValue() }.toMutableList()
-
-            val windSpeed = values.firstOrNull { it.name == "풍속" }?.value ?: 0.0
-
-            values.add(WeatherValue("풍속 구간", classifyWindSpeed(anyToDoubleOrZero(windSpeed)), "-"))
+            val firstItem = currentWeatherResponse.response.body.items.item[0]
 
             return CurrentWeather(
-                first.baseDate,
-                first.baseTime,
-                first.nx,
-                first.ny,
-                mapCode.city,
-                mapCode.gu,
-                mapCode.dong,
-                values
+                baseDate = firstItem.baseDate,
+                baseTime = firstItem.baseTime,
+                nx = firstItem.nx,
+                ny = firstItem.ny,
+                city = mapCode.city,
+                gu = mapCode.gu,
+                dong = mapCode.dong,
+                temperature = getValue(currentWeatherResponse, Category.T1H),
+                humidity = getValue(currentWeatherResponse, Category.REH),
+                rainType = Category.PTYCode.getCodeName(getValue(currentWeatherResponse, Category.PTY).toInt()),
+                rainAmount = getValue(currentWeatherResponse, Category.RN1),
+                windSpeed = getValue(currentWeatherResponse, Category.WSD),
+                windType = classifyWindSpeed(getValue(currentWeatherResponse, Category.WSD))
             )
+        }
+
+        private fun getValue(currentWeatherResponse: CurrentWeatherResponse, category: Category): Double {
+            return currentWeatherResponse.response.body.items.item
+                .firstOrNull { it.category == category }
+                ?.obsrValue?.toDoubleOrNull() ?: 0.0
         }
 
         private fun classifyWindSpeed(windSpeed: Double): String {
@@ -48,21 +53,5 @@ data class CurrentWeather(
                 else -> "매우 강한 바람"
             }
         }
-
-        private fun anyToDoubleOrZero(value: Any): Double {
-            return try {
-                value.toString().toDouble()
-            } catch (e: NumberFormatException) {
-                0.0
-            }
-        }
-    }
-}
-
-fun Item.toWeatherValue(): CurrentWeather.WeatherValue {
-    return if (category == Category.PTY) {
-        CurrentWeather.WeatherValue(category.categoryName, Category.PTYCode.getCodeName(obsrValue.toInt()), category.unit)
-    } else {
-        CurrentWeather.WeatherValue(category.categoryName, obsrValue.toDouble(), category.unit)
     }
 }

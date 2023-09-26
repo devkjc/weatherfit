@@ -12,6 +12,16 @@ spring:
     hibernate:
       ddl-auto: update
       default_batch_fetch_size: 1000
-
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      group-id: hello
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 weather:
   service-key: fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D

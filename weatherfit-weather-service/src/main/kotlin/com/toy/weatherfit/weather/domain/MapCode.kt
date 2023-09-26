@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 
 @Entity
-open class MapCode(
+class MapCode(
     val code: String,
     val city: String,
     val gu: String,

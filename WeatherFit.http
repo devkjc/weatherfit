@@ -52,7 +52,7 @@ GET https://apis.data.go.kr/1360000/NwpModelInfoService/getLdapsUnisAll
 GET https://apis.data.go.kr/1360000/NwpModelInfoService/getLdapsUnisArea
     ?ServiceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
     &pageNo=1&numOfRows=10&dataType=JSON
-    &baseTime=202309130300&dongCode=4136057000&dataTypeCd=Temp
+    &baseTime=202309260300&dongCode=4136057000&dataTypeCd=Temp
 
 ### 지역예보모델 단일면한반도조회
 ### 기상청에서 운영하는 수치예보모델중 지역예보모델의 단일면 한반도 데이터를 조회하는 기능

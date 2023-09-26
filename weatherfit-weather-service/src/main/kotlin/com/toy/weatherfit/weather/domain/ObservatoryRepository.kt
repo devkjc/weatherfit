@@ -3,20 +3,18 @@ package com.toy.weatherfit.weather.domain
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import org.springframework.stereotype.Repository
 
-@Repository
-interface MapCodeRepository : JpaRepository<MapCode, Long> {
+interface ObservatoryRepository: JpaRepository<Observatory, Long> {
 
     @Query(
         value = """
             SELECT *,
                    ST_DISTANCE(POINT(:lon, :lat), POINT(longitude, latitude)) AS distance
-            FROM map_code
+            FROM observatory
             ORDER BY distance
             LIMIT 1
         """, nativeQuery = true
     )
-    fun getMapCodeByLatLon(@Param("lat") lat: Double, @Param("lon") lon: Double): MapCode
+    fun getObservatoryByLatLon(@Param("lat") lat: Double, @Param("lon") lon: Double): Observatory
 
 }
