@@ -1,20 +1,27 @@
 package com.toy.weatherfit.weather.service
 
+import com.toy.weatherfit.weather.domain.WeatherAsos
+import com.toy.weatherfit.weather.domain.WeatherAsosRepository
+import org.springframework.cache.interceptor.SimpleKeyGenerator
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
+import javax.crypto.KeyGenerator
 
-/*
-    TODO
-        1. Kafka에 매일 00시에 전 날 날짜 데이터를 저장한다.
-        2. 해당 지점, 날짜데이터를 Kafka에서 조회해 데이터를 가져온다.
- */
 @Service
 class WeatherService(
-    private val weatherCall: WeatherCall
+    private val weatherAsosRepository: WeatherAsosRepository
 ) {
 
-    fun savePastWeather(startDate: String, endDate: String, stdId: Long) {
-        val dailyWeather = weatherCall.callDailyWeather(startDate, endDate, stdId)
+    fun saveWeatherAsosList(items: List<WeatherAsos>) {
+        weatherAsosRepository.saveAll(items)
+    }
 
+    fun updateStnNm() {
+        weatherAsosRepository.updateStnNm()
+    }
+
+    fun getWeatherByStnNoAndDate(stnNo: Long, date: String): WeatherAsos? {
+        return weatherAsosRepository.findByStnNoAndDate(stnNo, date)
     }
 
 }

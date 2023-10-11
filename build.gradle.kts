@@ -45,13 +45,13 @@ subprojects {
             implementation("org.hibernate:hibernate-spatial:6.3.0.Final")
             implementation("org.springframework.boot:spring-boot-starter-data-jpa")
             implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+            testImplementation(project(":weatherfit-api"))
         }
         implementation("org.springframework.boot:spring-boot-starter-validation")
         implementation ("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
         implementation("org.springframework.boot:spring-boot-starter")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation(kotlin("test"))
-        testImplementation(project(":weatherfit-api"))
         testImplementation(project(":weatherfit-core"))
     }
     tasks.test {

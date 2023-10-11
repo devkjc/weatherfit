@@ -1,0 +1,8 @@
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+      platform: mysql
+  profiles:
+    include:
+      - weather

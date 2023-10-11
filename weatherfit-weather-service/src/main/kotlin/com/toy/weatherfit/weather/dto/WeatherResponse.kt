@@ -20,6 +20,10 @@ data class WeatherResponse(
                 val item: List<Item>
             ) {
                 data class Item(
+                    // 날짜
+                    val tm: String,
+                    // 지점 번호
+                    val stnId: Long,
                     // 지점 이름
                     val stnNm: String,
                     // 평균 기온
@@ -36,12 +40,16 @@ data class WeatherResponse(
                     val maxWs: String,
                     // 평균 풍속
                     val avgWs: String,
-                )
+                ){
+                    val formattedTm: String
+                        get() = tm.replace("-", "")
+                }
             }
         }
     }
 
     fun getWeather() = response.body.items.item.getOrNull(0)
+    fun getWeathers() = response.body.items
 
     /**
      * 결과 코드
@@ -62,6 +70,11 @@ data class WeatherResponse(
         get() = getWeather()?.stnNm ?: ""
 
     /**
+     * 날짜
+     */
+    val tm: String
+        get() = getWeather()?.tm ?: ""
+    /**
      * 평균 기온
      */
     val avgTa: String
@@ -72,6 +85,7 @@ data class WeatherResponse(
      */
     val minTa: String
         get() = getWeather()?.minTa ?: ""
+
 
     /**
      * 최고 기온

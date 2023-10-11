@@ -34,9 +34,9 @@ GET https://apis.data.go.kr/1360000/AsosDalyInfoService
 ###
 GET https://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList
     ?serviceKey=fVxTbyzr4UCYHaz52xRECp7FjowgGOS1%2B6JgsbFcwHODs8He8MkPqZ0SqovvcKTz%2FdY0D2BMLT0XixfKLY2K%2FQ%3D%3D
-    &pageNo=1&numOfRows=10
+    &pageNo=1&numOfRows=999
     &dataType=JSON&dataCd=ASOS
-    &dateCd=DAY&startDt=20230829&endDt=20230829
+    &dateCd=DAY&startDt=20231005&endDt=20231005
     &stnIds=108
 
 ### 국지예보모델 단일면한반도조회

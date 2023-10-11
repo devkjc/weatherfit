@@ -1,9 +1,11 @@
 package com.toy.weatherfit.weather.service
 
+import com.google.gson.GsonBuilder
 import com.toy.weatherfit.weather.domain.MapCodeRepository
 import com.toy.weatherfit.weather.dto.CurrentWeather
 import com.toy.weatherfit.weather.dto.CurrentWeatherResponse
 import com.toy.weatherfit.weather.dto.WeatherResponse
+import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import retrofit2.Call
@@ -14,18 +16,26 @@ import retrofit2.http.Query
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.TimeUnit
 
 @Service
 class WeatherCall(
     private val mapCodeRepository: MapCodeRepository
 ) {
 
-    @Value("\${weather.service-key}") // YAML 파일의 키 이름을 지정합니다.
+    @Value("\${weather.data.service-key}") // YAML 파일의 키 이름을 지정합니다.
     private lateinit var serviceKey: String
+
+    // OkHttpClient를 생성하고 타임아웃을 설정
+    private final val httpClient = OkHttpClient.Builder()
+        .readTimeout(120, TimeUnit.SECONDS) // 읽기 타임아웃 (초 단위)
+        .connectTimeout(120, TimeUnit.SECONDS) // 연결 타임아웃 (초 단위)
+        .build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://apis.data.go.kr/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .client(httpClient)
         .build()
 
     private val apiService = retrofit.create(WeatherCallService::class.java)
@@ -58,13 +68,20 @@ class WeatherCall(
      * @param stnId Int
      * @return WeatherResponse.Response.Body.Items.Item?
      */
-    fun callDailyWeather(startDt: String, endDt: String, stnId: Long): WeatherResponse.Response.Body.Items.Item? {
-        val call = apiService.getDailyWeather(startDt, endDt, serviceKey, stnIds = stnId.toString())
+    fun callDailyWeather(startDt: String, endDt: String, stnId: Long?, all: Boolean): WeatherResponse.Response.Body.Items? {
+        val call = apiService.getDailyWeather(
+            startDt = startDt,
+            endDt = endDt,
+            serviceKey = serviceKey,
+            numOfRows = if (all) "999" else "1",
+            stnIds = stnId.toString()
+        )
 
         val response = call.execute()
         return if (response.isSuccessful && response.body() != null && response.body()?.resultCode.equals("00")) {
-            response.body()!!.getWeather()
+            response.body()!!.getWeathers()
         } else {
+            println(response)
             null
         }
     }
@@ -86,6 +103,19 @@ interface WeatherCallService {
     fun getDailyWeather(
         @Query(value = "startDt", encoded = true) startDt: String,
         @Query(value = "endDt", encoded = true) endDt: String,
+        @Query(value = "numOfRows", encoded = true) numOfRows: String,
+        @Query(value = "serviceKey", encoded = true) serviceKey: String,
+        @Query(value = "stnIds", encoded = true) stnIds: String = "108",
+        @Query(value = "dataType", encoded = true) dataType: String = "JSON",
+        @Query(value = "dataCd", encoded = true) dataCd: String = "ASOS",
+        @Query(value = "dateCd", encoded = true) dateCd: String = "DAY"
+    ): Call<WeatherResponse>
+
+    @GET("/api/typ01/url/kma_sfcdd.php?tm=20231008&stn=0&help=1&authKey=qkoAyovRQwmKAMqL0bMJXA")
+    fun getDailyWeather2(
+        @Query(value = "startDt", encoded = true) startDt: String,
+        @Query(value = "endDt", encoded = true) endDt: String,
+        @Query(value = "numOfRows", encoded = true) numOfRows: String,
         @Query(value = "serviceKey", encoded = true) serviceKey: String,
         @Query(value = "stnIds", encoded = true) stnIds: String = "108",
         @Query(value = "dataType", encoded = true) dataType: String = "JSON",

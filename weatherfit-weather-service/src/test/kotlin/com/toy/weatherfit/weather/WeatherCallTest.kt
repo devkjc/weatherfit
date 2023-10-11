@@ -24,10 +24,15 @@ class WeatherCallTest(
 
     }
 
-//    @Test
+    @Test
     fun callCurrentWeather() {
         val callCurrentWeather = weatherCall.callCurrentWeather(37.5889503, 127.0644882)
         println(callCurrentWeather)
+    }
+
+    @Test
+    fun callDailyWeather() {
+        weatherCall.callDailyWeather("20231004", "20231004", 108, true)
     }
 
     private fun getTimeFormat(now: LocalTime): String? = when {
