@@ -19,7 +19,12 @@ class BatchParamService(
     }
 
     fun getLastDate(): String? {
-        val query = "SELECT MAX(PARAMETER_VALUE) FROM BATCH_JOB_EXECUTION_PARAMS WHERE PARAMETER_TYPE = 'java.lang.String' AND PARAMETER_NAME = 'date'"
+        val query = "SELECT MAX(PARAMETER_VALUE)\n" +
+                "FROM BATCH_JOB_EXECUTION_PARAMS join\n" +
+                "     batch_job_execution bje on bje.JOB_EXECUTION_ID = BATCH_JOB_EXECUTION_PARAMS.JOB_EXECUTION_ID\n" +
+                "WHERE PARAMETER_TYPE = 'java.lang.String'\n" +
+                "  AND PARAMETER_NAME = 'date'\n" +
+                "  AND bje.EXIT_CODE = 'COMPLETED'"
         return jdbcTemplate.queryForObject(query, String::class.java)
     }
 
