@@ -1,4 +1,4 @@
-package com.toy.weatherfit.batch
+package com.toy.weatherfit.batch.config
 
 import com.toy.weatherfit.weather.domain.WeatherAsos
 import com.toy.weatherfit.weather.dto.WeatherCsvResponse
@@ -73,7 +73,7 @@ class WeatherBatchConfiguration(
 
     fun weatherItemReader(date: String): ItemReader<WeatherCsvResponse> {
         return FlatFileItemReaderBuilder<WeatherCsvResponse>()
-            .name("personItemReader")
+            .name("weatherItemReader")
             .resource(UrlResource("https://apihub.kma.go.kr/api/typ01/url/kma_sfcdd.php?tm=$date&stn=0&help=0&authKey=$serviceKey"))
             .lineTokenizer {
                 // DelimitedLineTokenizer 구성
@@ -81,7 +81,7 @@ class WeatherBatchConfiguration(
                 tokenizer.setDelimiter(",") // CSV 파일에서 필드를 쉼표로 구분
                 tokenizer.setNames("tm", "stn", "wsAvg", "wrDay", "wdMax", "wsMax", "wsMaxTm", "wdIns", "wsIns", "wsInsTm", "taAvg", "taMax", "taMaxTm", "taMin", "taMinTm", "tdAvg", "tsAvg", "tgMin", "hmAvg", "hmMin", "hmMinTm", "pvAvg", "evS",
                     "evL", "fgDur", "paAvg", "psAvg", "psMax", "psMaxTm", "psMin", "psMinTm", "caTot", "ssDay", "ssDur", "ssCmb", "siDay", "si60MMax", "si60MMaxTm", "rnDay", "rnD99", "rnDur", "rn60MMax", "rn60MMaxTm", "rn10MMax", "rn10MMaxTm",
-                    "rnPowMax", "rnPowMaxTm", "sdNew", "sdNewTm", "sdMax", "sdMaxTm", "te05", "te10", "te15", "te30", "te50","test") // 각 필드의 이름 설정
+                    "rnPowMax", "rnPowMaxTm", "sdNew", "sdNewTm", "sdMax", "sdMaxTm", "te05", "te10", "te15", "te30", "te50","blank") // 각 필드의 이름 설정
                 tokenizer.tokenize(it)
             }
             .fieldSetMapper(fieldMapper())

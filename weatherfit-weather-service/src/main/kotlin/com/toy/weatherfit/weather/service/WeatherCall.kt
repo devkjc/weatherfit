@@ -111,18 +111,6 @@ interface WeatherCallService {
         @Query(value = "dateCd", encoded = true) dateCd: String = "DAY"
     ): Call<WeatherResponse>
 
-    @GET("/api/typ01/url/kma_sfcdd.php?tm=20231008&stn=0&help=1&authKey=qkoAyovRQwmKAMqL0bMJXA")
-    fun getDailyWeather2(
-        @Query(value = "startDt", encoded = true) startDt: String,
-        @Query(value = "endDt", encoded = true) endDt: String,
-        @Query(value = "numOfRows", encoded = true) numOfRows: String,
-        @Query(value = "serviceKey", encoded = true) serviceKey: String,
-        @Query(value = "stnIds", encoded = true) stnIds: String = "108",
-        @Query(value = "dataType", encoded = true) dataType: String = "JSON",
-        @Query(value = "dataCd", encoded = true) dataCd: String = "ASOS",
-        @Query(value = "dateCd", encoded = true) dateCd: String = "DAY"
-    ): Call<WeatherResponse>
-
     @GET("/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst")
     fun getCurrentWeather(
         @Query(value = "base_date", encoded = true) base_date: String,
