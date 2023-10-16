@@ -1,6 +1,7 @@
 package com.toy.weatherfit.weather.service
 
 import com.toy.weatherfit.weather.domain.WeatherAsos
+import com.toy.weatherfit.weather.domain.WeatherAsosId
 import com.toy.weatherfit.weather.domain.WeatherAsosRepository
 import org.springframework.cache.interceptor.SimpleKeyGenerator
 import org.springframework.context.annotation.Bean
@@ -21,7 +22,7 @@ class WeatherService(
     }
 
     fun getWeatherByStnNoAndDate(stnNo: Long, date: String): WeatherAsos? {
-        return weatherAsosRepository.findByStnNoAndDate(stnNo, date)
+        return weatherAsosRepository.findById(WeatherAsosId(stnNo, date))
     }
 
 }

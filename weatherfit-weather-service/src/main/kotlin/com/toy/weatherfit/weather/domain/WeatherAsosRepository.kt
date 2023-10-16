@@ -21,8 +21,8 @@ interface WeatherAsosRepository : CrudRepository<WeatherAsos, Long> {
 
     @Cacheable(
         value = ["weatherAsosCache"],
-        key = "'stnNo:' + #stnNo + ':date:' + #date"
+        key = "'stnNo:' + #id.stnNo + ':date:' + #id.date"
     )
-    fun findByStnNoAndDate(stnNo: Long, date: String): WeatherAsos?
+    fun findById(id: WeatherAsosId): WeatherAsos?
 
 }

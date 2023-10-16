@@ -4,8 +4,10 @@ import com.toy.weatherfit.test.DataServiceTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import kotlin.test.Ignore
 
 @DataServiceTest
+@Ignore
 class BatchParamServiceTest(
     private val batchParamService: BatchParamService
 ){

@@ -31,11 +31,12 @@ class WeatherBatchConfiguration(
     private lateinit var serviceKey: String
 
     @Bean(name = ["weatherJob"])
+    @JobScope
     fun weatherJob(jobRepository: JobRepository, weatherStep: Step, observatoryStep: Step): Job {
         return JobBuilder("weatherJob", jobRepository)
+            .incrementer(RunIdIncrementer())
             .start(weatherStep)
             .next(observatoryStep)
-            .incrementer(RunIdIncrementer())
             .build()
     }
 
@@ -75,6 +76,7 @@ class WeatherBatchConfiguration(
         return FlatFileItemReaderBuilder<WeatherCsvResponse>()
             .name("weatherItemReader")
             .resource(UrlResource("https://apihub.kma.go.kr/api/typ01/url/kma_sfcdd.php?tm=$date&stn=0&help=0&authKey=$serviceKey"))
+//            .resource(UrlResource("https://apihub.kma.go.kr/api/typ012/url/kma_sfcdd.php?tm=$date&stn=0&help=0&authKey=$serviceKey"))
             .lineTokenizer {
                 // DelimitedLineTokenizer 구성
                 val tokenizer = DelimitedLineTokenizer()
