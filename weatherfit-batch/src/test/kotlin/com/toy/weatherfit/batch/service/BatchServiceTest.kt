@@ -24,7 +24,7 @@ class BatchServiceTest(
     @Test
     fun runWeatherJobsTest() {
         batchParamService.getDatesBetween(
-            LocalDate.of(2023,10,1), LocalDate.of(2023,10,15)).forEach {
+            LocalDate.of(2010,10,1), LocalDate.of(2023,10,15)).forEach {
                 batchService.runWeatherJob(it)
         }
     }

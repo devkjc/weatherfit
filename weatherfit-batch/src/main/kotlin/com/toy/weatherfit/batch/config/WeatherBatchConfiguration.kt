@@ -31,7 +31,6 @@ class WeatherBatchConfiguration(
     private lateinit var serviceKey: String
 
     @Bean(name = ["weatherJob"])
-    @JobScope
     fun weatherJob(jobRepository: JobRepository, weatherStep: Step, observatoryStep: Step): Job {
         return JobBuilder("weatherJob", jobRepository)
             .incrementer(RunIdIncrementer())

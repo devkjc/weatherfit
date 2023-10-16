@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://weatherfit-mysql:3306/weatherfit?serverTimezone=Asia/Seoul
+  data:
+    redis:
+      host: weatherfit-redis
+      port: 6371

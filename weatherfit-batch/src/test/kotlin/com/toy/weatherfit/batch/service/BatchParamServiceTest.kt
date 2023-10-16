@@ -7,12 +7,12 @@ import java.time.LocalDate
 import kotlin.test.Ignore
 
 @DataServiceTest
-@Ignore
 class BatchParamServiceTest(
     private val batchParamService: BatchParamService
 ){
 
     @Test
+    @Ignore
     fun getLastDateTest() {
         val lastDate = batchParamService.getLastDate()
         println(lastDate)
