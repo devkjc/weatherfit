@@ -27,7 +27,7 @@ services:
       - weatherfit-network
 
   batch:
-    image: kjc3590/weatherfit-batch:1.0
+    image: kjc3590/weatherfit-batch:1.1
     container_name: weatherfit-batch
     ports:
       - "8014:8080"

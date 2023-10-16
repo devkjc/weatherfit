@@ -2,7 +2,7 @@ spring:
   cache:
     type: redis
   datasource:
-    url: jdbc:mysql://localhost:3306/weatherfit?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://weatherfit-mysql:3306/weatherfit?serverTimezone=Asia/Seoul
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,7 +17,7 @@ spring:
     show-sql: false
   data:
     redis:
-      host: localhost
+      host: weatherfit-redis
       port: 6371
 weather:
   data:
