@@ -4,5 +4,6 @@ spring:
       initialize-schema: always
       platform: mysql
   profiles:
-    include:
-      - weather
+    group:
+      "docker" : "weather, weather-docker"
+      "default" : "weather"

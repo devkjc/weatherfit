@@ -1,11 +1,7 @@
 package com.toy.weatherfit.weather.service
 
-import com.toy.weatherfit.test.DataServiceTest
-import com.toy.weatherfit.test.DataSweepExtension
 import com.toy.weatherfit.weather.domain.ObservatoryRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDate
@@ -13,9 +9,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import kotlin.test.Test
 
-//@DataServiceTest
 @SpringBootTest
-//@ExtendWith(DataSweepExtension::class)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class WeatherServiceTest(
     private val weatherService: WeatherService,

@@ -17,7 +17,6 @@ services:
 #      - lib/mysql/data
     networks:
       - weatherfit-network
-
   redis:
     image: redis:7.2.1
     container_name: weatherfit-redis
@@ -25,9 +24,8 @@ services:
       - "6371:6379"
     networks:
       - weatherfit-network
-
   batch:
-    image: kjc3590/weatherfit-batch:1.1
+    image: kjc3590/weatherfit-batch:1.4
     container_name: weatherfit-batch
     ports:
       - "8014:8080"
@@ -36,6 +34,7 @@ services:
       - redis
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - TZ=Asia/Seoul
     networks:
       - weatherfit-network
 

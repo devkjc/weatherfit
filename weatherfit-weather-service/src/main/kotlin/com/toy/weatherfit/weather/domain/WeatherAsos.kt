@@ -6,7 +6,7 @@ import jakarta.persistence.*
 import java.io.Serializable
 
 @Entity
-class WeatherAsos (
+class WeatherAsos(
     // 지점 이름
     val stnNm: String,
     // 평균 기온
@@ -53,21 +53,21 @@ class WeatherAsos (
             )
         }
     }
+    @Embeddable
+    class WeatherAsosId : Serializable {
+        // 지점 번호
+        var stnNo: Long = 0
 
-}
-
-@Embeddable
-class WeatherAsosId : Serializable {
-    // 지점 번호
-    var stnNo: Long = 0
-    // 날짜
-    var date: String? = null
+        // 날짜
+        var date: String? = null
 
 
-    constructor(stnNo: Long, date: String?) {
-        this.stnNo = stnNo
-        this.date = date
+        constructor(stnNo: Long, date: String?) {
+            this.stnNo = stnNo
+            this.date = date
+        }
+
+        constructor()
     }
-
-    constructor()
 }
+

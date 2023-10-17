@@ -28,8 +28,8 @@ class RedisConfig {
     @Bean
     fun redisTemplate(): RedisTemplate<*, *> {
         val redisTemplate: RedisTemplate<ByteArray, ByteArray> = RedisTemplate()
-        redisTemplate.setConnectionFactory(redisConnectionFactory())
-        redisTemplate.setDefaultSerializer(StringRedisSerializer())
+        redisTemplate.connectionFactory = redisConnectionFactory()
+        redisTemplate.defaultSerializer = StringRedisSerializer()
         return redisTemplate
     }
 
