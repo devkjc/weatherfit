@@ -10,7 +10,7 @@ class WeatherBatchScheduler(
     private val batchService: BatchService
 ){
 
-    @Scheduled(cron = "0 10 0 * * ?")
+    @Scheduled(cron = "0 10 0 * * ?", zone = "Asia/Seoul")
     fun weatherScheduler() {
         val yesterday = LocalDate.now().minusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE)
         batchService.runWeatherJob(yesterday)

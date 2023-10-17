@@ -3,6 +3,7 @@ package com.toy.weatherfit.batch.service
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.JobParametersBuilder
 import org.springframework.batch.core.launch.JobLauncher
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,11 +30,16 @@ class BatchService(
             run(weatherJob, jobParameters)
         }
 
-        println(
-            result.getOrElse { exception ->
-                println("Job failed with exception: ${exception.message}")
+        result.onSuccess {
+            println(" Job Success == $date == ${it.endTime} ")
+        }
+
+        result.onFailure { exception ->
+            when (exception) {
+                JobExecutionAlreadyRunningException::class.java -> println("=SKIP=")
+                else -> exception.printStackTrace()
             }
-        )
+        }
 
     }
 

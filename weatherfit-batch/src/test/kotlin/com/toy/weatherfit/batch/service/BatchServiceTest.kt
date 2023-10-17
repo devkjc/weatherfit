@@ -8,7 +8,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.test.Ignore
 
-@Ignore
+//@Ignore
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class BatchServiceTest(
