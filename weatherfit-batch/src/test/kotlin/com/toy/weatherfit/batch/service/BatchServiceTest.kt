@@ -18,13 +18,13 @@ class BatchServiceTest(
 
     @Test
     fun runWeatherJobTest() {
-        batchService.runWeatherJob("20231001")
+        batchService.runWeatherJob("20231003")
     }
 
     @Test
     fun runWeatherJobsTest() {
         batchParamService.getDatesBetween(
-            LocalDate.of(2010,10,1), LocalDate.of(2023,10,15)).forEach {
+            LocalDate.of(2013,10,27), LocalDate.of(2023,10,15)).forEach {
                 batchService.runWeatherJob(it)
         }
     }
@@ -35,9 +35,9 @@ class BatchServiceTest(
     }
 
     @Test
-    fun isTodayAfterEqualDateTest() {
-        assertThat(batchService.isTodayAfterEqualDate(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE))).isTrue()
-        assertThat(batchService.isTodayAfterEqualDate("30000101")).isTrue()
-        assertThat(batchService.isTodayAfterEqualDate("20231015")).isFalse()
+    fun isValidDate() {
+        assertThat(batchService.isValidDate(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE))).isTrue()
+        assertThat(batchService.isValidDate("30000101")).isTrue()
+        assertThat(batchService.isValidDate("20231015")).isFalse()
     }
 }

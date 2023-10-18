@@ -1,12 +1,13 @@
 package com.toy.weatherfit.batch.service
 
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.JobParametersBuilder
+import org.springframework.batch.core.*
 import org.springframework.batch.core.launch.JobLauncher
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 @Service
 class BatchService(
@@ -16,45 +17,36 @@ class BatchService(
 ) {
 
     fun runWeatherJob(date: String) {
-        println("실행 $date")
+        require(isValidDate(date)) { "오늘 이전의 날짜만 사용할 수 있습니다." }
 
-        if (isTodayAfterEqualDate(date)) {
-            throw IllegalArgumentException("오늘 이전의 날짜만 사용할 수 있습니다.")
-        }
-
-        val jobParameters = JobParametersBuilder()
-            .addString("date", date)
-            .toJobParameters()
-
-        val result = jobLauncher.runCatching {
-            run(weatherJob, jobParameters)
-        }
-
-        result.onSuccess {
-            println(" Job Success == $date == ${it.endTime} ")
-        }
-
-        result.onFailure { exception ->
+        try {
+            val result = jobLauncher.run(weatherJob, buildJobParameters(date))
+            if (result.exitStatus.equals(ExitStatus.COMPLETED)) {
+                println(" Job Success == $date == ${result.endTime} ")
+            } else {
+                throw result.allFailureExceptions.first()
+            }
+        } catch (exception: JobExecutionException) {
             when (exception) {
-                JobExecutionAlreadyRunningException::class.java -> println("=SKIP=")
+                is JobExecutionAlreadyRunningException -> println("=SKIP=")
+                is JobInstanceAlreadyCompleteException -> println("=SKIP=")
                 else -> exception.printStackTrace()
             }
         }
-
     }
 
-    fun isTodayAfterEqualDate(date: String): Boolean {
-        val parseDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE)
-        val now = LocalDate.now()
-
-        return parseDate.isAfter(now)
-                || parseDate.isEqual(now)
-    }
-
-    fun blankRunWeatherJob() {
-        batchParamService.getLastDateToYesterday().forEach {
-            runWeatherJob(it)
+    fun isValidDate(date: String): Boolean {
+        return try {
+            LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE).isBefore(LocalDate.now())
+        } catch (e: DateTimeParseException) {
+            throw IllegalArgumentException("올바른 날짜 형식이 아닙니다.")
         }
     }
 
+    private fun buildJobParameters(date: String) =
+        JobParametersBuilder().addString("date", date).toJobParameters()
+
+    fun blankRunWeatherJob() {
+        batchParamService.getLastDateToYesterday().forEach { runWeatherJob(it) }
+    }
 }
