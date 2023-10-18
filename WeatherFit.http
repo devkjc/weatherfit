@@ -80,3 +80,13 @@ GET https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst
 ### 현시간 날씨 조회
 ### 37.6488758 127.1167427
 GET localhost:8080/weather?lat=37.6488758&lon=127.1167427
+
+### 파일 저장 테스트
+POST http://localhost:8080/feed/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="JJO.jpg"
+
+< /Users/jongchan/weatherfit/JJO.jpg
+--boundary
