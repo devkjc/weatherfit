@@ -17,21 +17,14 @@ class BatchService(
 ) {
 
     fun runWeatherJob(date: String) {
+
         require(isValidDate(date)) { "오늘 이전의 날짜만 사용할 수 있습니다." }
 
         try {
             val result = jobLauncher.run(weatherJob, buildJobParameters(date))
-            if (result.exitStatus.equals(ExitStatus.COMPLETED)) {
-                println(" Job Success == $date == ${result.endTime} ")
-            } else {
-                throw result.allFailureExceptions.first()
-            }
+            handleJobResult(result, date)
         } catch (exception: JobExecutionException) {
-            when (exception) {
-                is JobExecutionAlreadyRunningException -> println("=SKIP=")
-                is JobInstanceAlreadyCompleteException -> println("=SKIP=")
-                else -> exception.printStackTrace()
-            }
+            handleJobExecutionException(exception)
         }
     }
 
@@ -43,10 +36,24 @@ class BatchService(
         }
     }
 
+    fun blankRunWeatherJob() =
+        batchParamService.getLastDateToYesterday().forEach { runWeatherJob(it) }
+
     private fun buildJobParameters(date: String) =
         JobParametersBuilder().addString("date", date).toJobParameters()
 
-    fun blankRunWeatherJob() {
-        batchParamService.getLastDateToYesterday().forEach { runWeatherJob(it) }
+    private fun handleJobResult(result: JobExecution, date: String) {
+        if (result.exitStatus.equals(ExitStatus.COMPLETED)) {
+            println(" Job Success == $date == ${result.endTime} ")
+        } else {
+            throw result.allFailureExceptions.first()
+        }
+    }
+
+    private fun handleJobExecutionException(exception: JobExecutionException) {
+        when (exception) {
+            is JobExecutionAlreadyRunningException, is JobInstanceAlreadyCompleteException -> println("=SKIP=")
+            else -> exception.printStackTrace()
+        }
     }
 }

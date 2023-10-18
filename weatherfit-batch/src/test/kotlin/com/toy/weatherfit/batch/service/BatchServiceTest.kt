@@ -18,7 +18,7 @@ class BatchServiceTest(
 
     @Test
     fun runWeatherJobTest() {
-        batchService.runWeatherJob("20231003")
+        batchService.runWeatherJob("20231001")
     }
 
     @Test
@@ -36,8 +36,8 @@ class BatchServiceTest(
 
     @Test
     fun isValidDate() {
-        assertThat(batchService.isValidDate(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE))).isTrue()
-        assertThat(batchService.isValidDate("30000101")).isTrue()
-        assertThat(batchService.isValidDate("20231015")).isFalse()
+        assertThat(batchService.isValidDate(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE))).isFalse()
+        assertThat(batchService.isValidDate("30000101")).isFalse()
+        assertThat(batchService.isValidDate("20231015")).isTrue()
     }
 }

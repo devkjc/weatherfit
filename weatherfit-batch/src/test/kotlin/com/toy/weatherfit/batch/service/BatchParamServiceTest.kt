@@ -12,7 +12,6 @@ class BatchParamServiceTest(
 ){
 
     @Test
-    @Ignore
     fun getLastDateTest() {
         val lastDate = batchParamService.getLastDate()
         println(lastDate)
