@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException
 class BatchService(
     private val jobLauncher: JobLauncher,
     private val weatherJob: Job,
+    private val weatherListJob: Job,
     private val batchParamService: BatchParamService
 ) {
 
@@ -23,6 +24,27 @@ class BatchService(
         try {
             val result = jobLauncher.run(weatherJob, buildJobParameters(date))
             handleJobResult(result, date)
+        } catch (exception: JobExecutionException) {
+            handleJobExecutionException(exception)
+        }
+    }
+
+    fun runWeatherListJob(startDate: String, endDate: String) {
+
+        require(isValidDate(startDate) && isValidDate(endDate)) { "오늘 이전의 날짜만 사용할 수 있습니다." }
+
+        try {
+            val jobParameters = JobParametersBuilder()
+                .addString("startDate", startDate)
+                .addString("endDate", endDate)
+                .toJobParameters()
+
+            val result = jobLauncher.run(weatherListJob, jobParameters)
+            if (result.exitStatus.equals(ExitStatus.COMPLETED)) {
+                println(" Job Success == $startDate ~ $endDate == ${result.endTime} ")
+            } else {
+                throw result.allFailureExceptions.first()
+            }
         } catch (exception: JobExecutionException) {
             handleJobExecutionException(exception)
         }

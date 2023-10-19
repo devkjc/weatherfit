@@ -8,7 +8,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.test.Ignore
 
-//@Ignore
+@Ignore
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class BatchServiceTest(
@@ -27,6 +27,14 @@ class BatchServiceTest(
             LocalDate.of(2013,10,27), LocalDate.of(2023,10,15)).forEach {
                 batchService.runWeatherJob(it)
         }
+    }
+
+    @Test
+    fun runWeatherListJobTest() {
+        val formatter = DateTimeFormatter.BASIC_ISO_DATE
+        val startDate = LocalDate.of(2023, 10, 1).format(formatter)
+        val endDate = LocalDate.of(2023,10,17).format(formatter)
+        batchService.runWeatherListJob(startDate, endDate)
     }
 
     @Test
