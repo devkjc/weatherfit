@@ -7,33 +7,40 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import java.io.File
+import kotlin.random.Random
 
 @Service
 class FeedFileService(
     private val feedFileRepository: FeedFileRepository
 ) {
 
-    fun uploadFile(request: MultipartHttpServletRequest): FeedFile {
+    fun uploadFile(files: List<MultipartFile>): MutableList<FeedFile> {
 
-        val file: MultipartFile = request.getFile("file")
-            ?: throw IllegalArgumentException("파일 업로드에 실패했습니다.")
+        val saveFileList: MutableList<FeedFile> = mutableListOf()
 
-        val originalFilename = file.originalFilename
-            ?: throw IllegalArgumentException("파일 이름을 찾을 수 없습니다.")
+        files.forEach {
 
-        val fileName = getRandomFileName(extractExtension(originalFilename))
-        val filePath = "/Users/jongchan/weatherfit/upload/image/$fileName"
-        val savedFile = saveFile(file, filePath)
-        val thumbnailPath = uploadAndCreateThumbnail(savedFile, fileName)
+            val originalFilename = it.originalFilename
+                ?: throw IllegalArgumentException("파일 이름을 찾을 수 없습니다.")
 
-        return feedFileRepository.save(
-            FeedFile(
-                originalFileName = originalFilename,
-                fileName = fileName,
-                filePath = filePath,
-                thumbnailPath = thumbnailPath
+            val fileName = getRandomFileName(extractExtension(originalFilename))
+            val filePath = "/Users/jongchan/weatherfit/upload/image/$fileName"
+            val savedFile = saveFile(it, filePath)
+            val thumbnailPath = uploadAndCreateThumbnail(savedFile, fileName)
+
+            saveFileList.add(
+                feedFileRepository.save(
+                    FeedFile(
+                        originalFileName = originalFilename,
+                        fileName = fileName,
+                        filePath = filePath,
+                        thumbnailPath = thumbnailPath
+                    )
+                )
             )
-        )
+        }
+
+        return saveFileList
     }
 
     private fun saveFile(multipartFile: MultipartFile, filePath: String): File {
