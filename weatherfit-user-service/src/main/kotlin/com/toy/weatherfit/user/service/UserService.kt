@@ -1,5 +1,7 @@
 package com.toy.weatherfit.user.service
 
+import com.toy.weatherfit.user.domain.AgeRange
+import com.toy.weatherfit.user.domain.Gender
 import com.toy.weatherfit.user.domain.UserRepository
 import com.toy.weatherfit.user.dto.UserCreateRequest
 import com.toy.weatherfit.user.dto.UserResponse
@@ -32,6 +34,15 @@ class UserService(
             throw IllegalArgumentException("닉네임이 중복 되었습니다.")
         }
         return UserResponse.of(userRepository.save(userCreateRequest.toEntity()))
+    }
+
+    /**
+     * 유저 조회
+     * @param userId Long
+     * @return UserResponse
+     */
+    fun getUser(userId: Long): UserResponse {
+        return userRepository.findById(userId).map { UserResponse.of(it) }.orElseGet { UserResponse.invalidUser(userId) }
     }
 
 }

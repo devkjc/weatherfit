@@ -23,6 +23,9 @@ data class UserResponse(
                 height = user.height
             )
         }
+
+        fun invalidUser(userId: Long) =
+            UserResponse(userId, "탈퇴회원", AgeRange.AGE20_29, Gender.FEMALE, 160)
     }
 
 

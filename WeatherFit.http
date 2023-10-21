@@ -115,3 +115,6 @@ Content-Type: image/jpeg
 
 < /Users/jongchan/weatherfit/JJO2.jpg
 --WebAppBoundary
+
+### 피드 조회
+GET http://localhost:8080/feed

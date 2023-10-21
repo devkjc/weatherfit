@@ -10,4 +10,6 @@ dependencies{
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("net.coobird:thumbnailator:0.4.14")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation(project(":weatherfit-user-service"))
+    implementation(project(":weatherfit-weather-service"))
 }
