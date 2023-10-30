@@ -13,4 +13,8 @@ class ObservatoryService(
         return observatoryRepository.findAll()
     }
 
+    fun getObservatory(lat: Double, lon: Double): Observatory {
+        return observatoryRepository.getObservatoryByLatLon(lat, lon)
+    }
+
 }

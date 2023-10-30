@@ -59,7 +59,7 @@ class WeatherBatchConfiguration(
         return StepBuilder("weatherStep", jobRepository)
             .chunk<WeatherCsvResponse, WeatherAsos>(10, transactionManager)
             .reader(weatherItemReader(date))
-            .processor { item -> WeatherAsos.of(item) }
+            .processor { item -> WeatherAsos.ofCsvResponse(item) }
             .writer { weatherService.saveWeatherAsosList(it.items) }
             .faultTolerant()
             .retry(ItemStreamException::class.java)
@@ -79,7 +79,7 @@ class WeatherBatchConfiguration(
         return StepBuilder("weatherStep", jobRepository)
             .chunk<WeatherCsvResponse, WeatherAsos>(50, transactionManager)
             .reader(weatherListItemReader(startDate, endDate))
-            .processor { item -> WeatherAsos.of(item) }
+            .processor { item -> WeatherAsos.ofCsvResponse(item) }
             .writer { weatherService.saveWeatherAsosList(it.items) }
             .faultTolerant()
             .retry(ItemStreamException::class.java)

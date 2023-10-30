@@ -14,7 +14,7 @@ class WeatherAsosCacheTest {
 
     @Test
     fun cacheTest() {
-        weatherService.getWeatherByStnNoAndDate(108, "20231005")
+        weatherService.getWeatherByStnNoAndDate(108, "20231028")
         weatherService.getWeatherByStnNoAndDate(108, "20231005")
         weatherService.getWeatherByStnNoAndDate(108, "20231006")
         weatherService.getWeatherByStnNoAndDate(108, "20231007")

@@ -23,6 +23,6 @@ interface WeatherAsosRepository : CrudRepository<WeatherAsos, Long> {
         value = ["weatherAsosCache"],
         key = "'stnNo:' + #id.stnNo + ':date:' + #id.date"
     )
-    fun findById(id: WeatherAsos.WeatherAsosId): WeatherAsos?
+    fun findById(id: WeatherAsos.WeatherAsosId): WeatherAsos
 
 }

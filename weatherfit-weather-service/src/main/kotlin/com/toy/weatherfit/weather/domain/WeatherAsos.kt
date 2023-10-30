@@ -1,7 +1,6 @@
 package com.toy.weatherfit.weather.domain
 
 import com.toy.weatherfit.weather.dto.WeatherCsvResponse
-import com.toy.weatherfit.weather.dto.WeatherResponse
 import jakarta.persistence.*
 import java.io.Serializable
 
@@ -32,7 +31,7 @@ class WeatherAsos(
 ) : Serializable {
 
     companion object {
-        fun of(data: WeatherCsvResponse): WeatherAsos {
+        fun ofCsvResponse(data: WeatherCsvResponse): WeatherAsos {
 
             val weatherAsosId = WeatherAsosId()
             weatherAsosId.stnNo = data.stn

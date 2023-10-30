@@ -100,10 +100,12 @@ Content-Disposition: form-data; name="request";
 Content-Type: application/json
 
 {
-  "content" : "123",
-  "longitude" : 36.123,
-  "latitude" : 123.123
+  "content" : "안녕하세요 가을이네요",
+  "longitude" : 127.1146766,
+  "latitude" : 37.6507691,
+  "photoDate" : "2023-10-29"
 }
+
 --WebAppBoundary--
 Content-Disposition: form-data; name="feedFiles"; filename="JJO.jpg"
 Content-Type: image/jpeg
