@@ -18,6 +18,10 @@ class WeatherService(
         weatherAsosRepository.updateStnNm()
     }
 
+    fun getMissingDates() : List<String> {
+        return weatherAsosRepository.getMissingDates()
+    }
+
     fun getWeatherByLatAndLonAndDate(lat: Double, lon: Double, date: String): WeatherAsos? {
         return getWeatherByStnNoAndDate(observatoryService.getObservatory(lat, lon).stdNo, date)
     }

@@ -74,7 +74,10 @@ class BatchService(
 
     private fun handleJobExecutionException(exception: JobExecutionException) {
         when (exception) {
-            is JobExecutionAlreadyRunningException, is JobInstanceAlreadyCompleteException -> println("=SKIP=")
+            is JobExecutionAlreadyRunningException, is JobInstanceAlreadyCompleteException -> {
+                println(exception.message)
+                println("=SKIP=")
+            }
             else -> exception.printStackTrace()
         }
     }

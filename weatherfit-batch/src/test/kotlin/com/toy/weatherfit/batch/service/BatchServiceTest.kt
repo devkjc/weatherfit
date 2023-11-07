@@ -1,5 +1,6 @@
 package com.toy.weatherfit.batch.service
 
+import com.toy.weatherfit.weather.service.WeatherService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,7 +14,8 @@ import kotlin.test.Ignore
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class BatchServiceTest(
     private val batchService: BatchService,
-    private val batchParamService: BatchParamService
+    private val batchParamService: BatchParamService,
+    private val weatherService: WeatherService
 ){
 
     @Test
@@ -22,18 +24,17 @@ class BatchServiceTest(
     }
 
     @Test
-    fun runWeatherJobsTest() {
-        batchParamService.getDatesBetween(
-            LocalDate.of(2013,10,27), LocalDate.of(2023,10,15)).forEach {
-                batchService.runWeatherJob(it)
+    fun runMissingDatesWeatherJobTest() {
+        weatherService.getMissingDates().forEach {
+            batchService.runWeatherJob(it)
         }
     }
 
     @Test
     fun runWeatherListJobTest() {
         val formatter = DateTimeFormatter.BASIC_ISO_DATE
-        val startDate = LocalDate.of(2023, 10, 24).format(formatter)
-        val endDate = LocalDate.of(2023,10,26).format(formatter)
+        val startDate = LocalDate.of(2023, 11, 1).format(formatter)
+        val endDate = LocalDate.of(2023,11,6).format(formatter)
         batchService.runWeatherListJob(startDate, endDate)
     }
 

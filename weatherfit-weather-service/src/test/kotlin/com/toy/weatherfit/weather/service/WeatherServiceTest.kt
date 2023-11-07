@@ -1,6 +1,7 @@
 package com.toy.weatherfit.weather.service
 
 import com.toy.weatherfit.weather.domain.ObservatoryRepository
+import com.toy.weatherfit.weather.domain.WeatherAsosRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
@@ -13,6 +14,7 @@ import kotlin.test.Test
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class WeatherServiceTest(
     private val weatherService: WeatherService,
+    private val weatherAsosRepository: WeatherAsosRepository,
     private val observatoryRepository: ObservatoryRepository,
 ) {
 
@@ -23,7 +25,13 @@ class WeatherServiceTest(
         assertThat(findAll.filter { it.stdNo == 0L }.size).isEqualTo(0)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    fun getMissingDates() {
+        val missingDates = weatherAsosRepository.getMissingDates()
+        assertThat(missingDates.size).isGreaterThan(0)
+    }
+
+    @Test
     fun rangeDate() {
         val startDateStr = "20210110"
         val endDateStr = "20231004"
@@ -39,7 +47,7 @@ class WeatherServiceTest(
         println("두 날짜 사이의 일 수: $days 일")
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun replaceTest() {
         assertThat(("2023-10-04").replace("-", "")).isEqualTo("20231004")
     }

@@ -34,10 +34,10 @@ class FeedDto {
         val feedFiles: MutableList<FeedFile>,
         val likeCount: Long,
         val isLike: Boolean,
-        val weatherAsos: WeatherAsos,
+        val weatherAsos: WeatherAsos?,
     ){
         companion object{
-            fun of(feed: Feed, userDto: UserResponse, likeCount: Long, isLike: Boolean, weatherAsos: WeatherAsos): ResponseDto {
+            fun of(feed: Feed, userDto: UserResponse, likeCount: Long, isLike: Boolean, weatherAsos: WeatherAsos?): ResponseDto {
                 return ResponseDto(
                     id = feed.id ?: 0L,
                     content = feed.content,
